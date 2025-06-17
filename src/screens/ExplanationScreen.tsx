@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, ScrollView, StyleSheet } from "react-native";
+import { View, Text, ScrollView, StyleSheet, Button } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../navigation/AppNavigator";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { DrawerParamList } from "../navigation/DrawerNavigator";
+import { RootStackParamList } from "../navigation/AppNavigator";
+import CustomHeaderWithBack from "../components/CustomHeaderWithBack";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Explanation">;
 
@@ -75,15 +77,22 @@ export default function ExplanationScreen({ navigation }: Props) {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>🧠 Explicação da Recomendação</Text>
-      <Text style={styles.text}>{explanation}</Text>
-    </ScrollView>
+    <SafeAreaView style={styles.safeArea}>
+      <CustomHeaderWithBack title="Explicação da Recomendação" />
+      <ScrollView contentContainerStyle={styles.container}>
+        <Text style={styles.title}>🧠 Explicação da Recomendação</Text>
+        <Text style={styles.text}>{explanation}</Text>
+
+        <View style={styles.buttonContainer}></View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { padding: 24 },
+  safeArea: { flex: 1 },
+  container: { padding: 24, paddingBottom: 48 },
   title: { fontSize: 22, fontWeight: "bold", marginBottom: 16 },
-  text: { fontSize: 16, lineHeight: 22 },
+  text: { fontSize: 16, lineHeight: 22, marginBottom: 24 },
+  buttonContainer: { marginTop: 16 },
 });

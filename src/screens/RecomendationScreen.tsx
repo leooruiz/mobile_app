@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Button, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Button,
+  ScrollView,
+  SafeAreaView,
+} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { DrawerParamList } from "../navigation/DrawerNavigator";
+import { DrawerScreenProps } from "@react-navigation/drawer";
+import { Profile } from "../types";
 import { RootStackParamList } from "../navigation/AppNavigator";
+import CustomHeaderWithBack from "../components/CustomHeaderWithBack";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Recommendation">;
-
-type Profile = {
-  idade: string;
-  horizonte: string;
-  risco: string;
-  objetivo: string;
-  valor: string;
-};
 
 const saveToHistory = async (profile: Profile, carteira: string) => {
   const entry = {
@@ -60,16 +63,21 @@ export default function RecommendationScreen({ navigation }: Props) {
   if (!profile) return <Text style={styles.loading}>Carregando perfil...</Text>;
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Olá, investidor!</Text>
-      <Text style={styles.sub}>Perfil de Risco: {profile.risco}</Text>
-      <Text style={styles.recommendation}>{recommendation}</Text>
+    <SafeAreaView style={styles.container}>
+      <CustomHeaderWithBack title="Recomendação de Carteira" />
+      <ScrollView contentContainerStyle={styles.container}>
+        <Text style={styles.title}>Olá, investidor!</Text>
+        <Text style={styles.sub}>Perfil de Risco: {profile.risco}</Text>
+        <Text style={styles.recommendation}>{recommendation}</Text>
 
-      <Button
-        title="Ver explicação da recomendação"
-        onPress={() => navigation.navigate("Explanation")}
-      />
-    </ScrollView>
+        <Button
+          title="Ver explicação da recomendação"
+          onPress={() =>
+            profile && navigation.navigate("Explanation", { profile })
+          }
+        />
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
