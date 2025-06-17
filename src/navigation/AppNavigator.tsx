@@ -14,7 +14,7 @@ export type RootStackParamList = {
   Home: undefined;
   Preferences: undefined;
   Explanation: { profile: Profile };
-  Recommendation: { profile: Profile }; // <- esta linha é ESSENCIAL
+  Recommendation: { profile: Profile };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();

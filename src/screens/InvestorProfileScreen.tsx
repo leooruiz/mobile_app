@@ -50,7 +50,6 @@ export default function InvestorProfileScreen({ navigation }: Props) {
 
   useFocusEffect(
     React.useCallback(() => {
-      // toda vez que a tela ganhar foco, força reset
       setFormResetKey(Date.now());
     }, [])
   );
